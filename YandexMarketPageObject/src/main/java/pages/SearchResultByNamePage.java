@@ -9,19 +9,24 @@ import org.openqa.selenium.support.PageFactory;
 
 public class SearchResultByNamePage extends BasePage {
     @FindBy(xpath = ".//div[@class='n-product-title__text-container']//h1")
-    public WebElement actualTitle;
+    private WebElement actualTitle;
 
     public SearchResultByNamePage(WebDriver driver){
         PageFactory.initElements(driver, this);
+
         this.driver = driver;
     }
 
-    public void checkTitles(){
+    /**
+     * Проверка на соответсвие с выбранным товаром
+     * @param expected - выбранный товар
+     */
+    public void checkTitles(String expected){
         try {
-            Assert.assertEquals("Найдет не тот объект", FilterResultPage.firstResultName, actualTitle.getText());
+            Assert.assertEquals("Найдет не тот объект", expected, actualTitle.getText());
         }
         catch(NoSuchElementException e){
-            System.out.println("Яндекс поиск не нашел точную модель. Их баг.");
+            System.out.println("Товар не сооттвествует ожидаемому результату или не находитесь на странице товара");
         }
 
     }

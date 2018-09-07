@@ -9,12 +9,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BasePage {
     WebDriver driver;
 
-
-    public void waitUntilElementIsVisible (WebElement el){
-        WebDriverWait wait = new WebDriverWait(driver, 3); //необходимо настроить ожидание пока подгрузится окно Выбор региона
+    public void waitUntilElementIsVisible (WebElement el, int sec){
+        WebDriverWait wait = new WebDriverWait(driver, sec);
         wait.until(ExpectedConditions.visibilityOf(el));
     }
 
-
+    /**
+     * Нажать кнопку
+     * @param webElement - элемент на который нужно нажать
+     */
+    public void clickButton(WebElement webElement) {
+        webElement.click();
+    }
 
 }

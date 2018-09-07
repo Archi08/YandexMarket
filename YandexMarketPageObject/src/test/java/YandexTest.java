@@ -1,12 +1,13 @@
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.MainPage;
+import pages.*;
+
 
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class YandexTest {
     private WebDriver driver;
@@ -27,33 +28,33 @@ public class YandexTest {
     }
 
     @Test
-    public void yandexMarketHeadphonesTest() {
+    public void yandexMarketHeadphonesTest() throws InterruptedException {
         new MainPage(driver).selectMenuItem("Маркет");
-//                .selectMenuItem("Электроника")
-//                .chooseCategory("Наушники")
-//                .selectAdvancedPage()
-//                .selectPriceBounds("5000")
-//                .setManufacturer("Beats")
-//                .pushAccept()
-//                .checkObjectType("Наушники")
-//                .checkElementsNumber(22)
-//                .searchingModel()
-//                .checkTitles();
-//    }
+        ElectronicsPage electronicsPage = new ElectronicsPage(driver);
+        electronicsPage.clickButton(electronicsPage.getAcceptButton());
+        electronicsPage.chooseCategory("Электроника", "Наушники");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.selectAdvancedPage();
+        productPage.selectPriceBounds("5000");
+        productPage.setManufacrtur("Beats");
+        productPage.checkElementsNumber(12, "Наушники");
+        productPage.searchingModel("Наушники");
+        new SearchResultByNamePage(driver).checkTitles(productPage.getFirstResultName());
 
-//    @Test
-//    public void yandexMarketTVTest() {
-//        new MainPage(driver).selectMenuItem("Маркет")
-//                .selectMenuItem("Электроника")
-//                .chooseCategory("Телевизоры")
-//                .selectAdvancedPage()
-//                .selectPriceBounds("20000")
-//                .setManufacturer("Samsung")
-//                .setManufacturer("LG")
-//                .pushAccept()
-//                .checkObjectType("Телевизоры")
-//                .checkElementsNumber(48).
-//                searchingModel()
-//                .checkTitles();
+
+    }
+
+    @Test
+    public void yandexMarketTVTest() {
+        new MainPage(driver).selectMenuItem("Маркет");
+        new ElectronicsPage(driver).chooseCategory("Электроника", "Телевизоры");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.selectAdvancedPage();
+        productPage.selectPriceBounds("20000");
+        productPage.setManufacrtur("Samsung");
+        productPage.setManufacrtur("LG");
+        productPage.checkElementsNumber(12, "Телевизоры");
+        productPage.searchingModel("Телевизоры");
+        new SearchResultByNamePage(driver).checkTitles(productPage.getFirstResultName());
     }
 }
